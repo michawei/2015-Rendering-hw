@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E69745EA-724F-4AD3-BBF6-118EE433CC6E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>pbrt</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>93EE6ABB10EC6AF6FE99D3568B68C34D8BD00AF8</key>
+		<string>https://github.com/michawei/2015-Rendering-hw.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>pbrt-v2-master/src/pbrt.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>93EE6ABB10EC6AF6FE99D3568B68C34D8BD00AF8</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/michawei/2015-Rendering-hw.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>93EE6ABB10EC6AF6FE99D3568B68C34D8BD00AF8</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>93EE6ABB10EC6AF6FE99D3568B68C34D8BD00AF8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>2015-Rendering-hw</string>
+		</dict>
+	</array>
+</dict>
+</plist>
