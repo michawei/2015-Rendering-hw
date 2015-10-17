@@ -61,7 +61,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "scenes/bunny.pbrt"
+            argument = "scenes/project1-heightfields/hftest.pbrt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "scenes/project1-heightfields/landsea-0.pbrt"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

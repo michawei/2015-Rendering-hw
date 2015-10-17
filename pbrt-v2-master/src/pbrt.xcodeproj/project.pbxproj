@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		003B07731BD23713007DA32E /* heightfield2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 003B07711BD23713007DA32E /* heightfield2.cpp */; };
 		B130248E1236EE5100206AC7 /* fileutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B130248C1236EE5100206AC7 /* fileutil.cpp */; };
 		B13B5765161245F5008FFA44 /* targa.c in Sources */ = {isa = PBXBuildFile; fileRef = B13B5763161245F5008FFA44 /* targa.c */; };
 		B19397BB12083210008317C5 /* shinymetal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B19397B912083210008317C5 /* shinymetal.cpp */; };
@@ -168,6 +169,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		003B07711BD23713007DA32E /* heightfield2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = heightfield2.cpp; path = shapes/heightfield2.cpp; sourceTree = SOURCE_ROOT; };
+		003B07721BD23713007DA32E /* heightfield2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = heightfield2.h; path = shapes/heightfield2.h; sourceTree = SOURCE_ROOT; };
 		B130248C1236EE5100206AC7 /* fileutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fileutil.cpp; sourceTree = "<group>"; };
 		B130248D1236EE5100206AC7 /* fileutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileutil.h; sourceTree = "<group>"; };
 		B13B5763161245F5008FFA44 /* targa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = targa.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -749,6 +752,8 @@
 				B1D8EC4E1170310E00A8A49E /* disk.h */,
 				B1D8EC4F1170310E00A8A49E /* heightfield.cpp */,
 				B1D8EC501170310E00A8A49E /* heightfield.h */,
+				003B07711BD23713007DA32E /* heightfield2.cpp */,
+				003B07721BD23713007DA32E /* heightfield2.h */,
 				B1D8EC511170310E00A8A49E /* hyperboloid.cpp */,
 				B1D8EC521170310E00A8A49E /* hyperboloid.h */,
 				B1D8EC531170310E00A8A49E /* loopsubdiv.cpp */,
@@ -936,6 +941,7 @@
 				B1D8EC941170310E00A8A49E /* infinite.cpp in Sources */,
 				B1D8EC951170310E00A8A49E /* point.cpp in Sources */,
 				B1D8EC961170310E00A8A49E /* projection.cpp in Sources */,
+				003B07731BD23713007DA32E /* heightfield2.cpp in Sources */,
 				B1D8EC971170310E00A8A49E /* spot.cpp in Sources */,
 				B1D8EC981170310E00A8A49E /* pbrt.cpp in Sources */,
 				B1D8EC991170310E00A8A49E /* glass.cpp in Sources */,

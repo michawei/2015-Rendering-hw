@@ -33,8 +33,8 @@
 #pragma once
 #endif
 
-#ifndef PBRT_SHAPES_HEIGHTFIELD_H
-#define PBRT_SHAPES_HEIGHTFIELD_H
+#ifndef PBRT_SHAPES_HEIGHTFIELD2_H
+#define PBRT_SHAPES_HEIGHTFIELD2_H
 
 // shapes/heightfield.h*
 #include "shape.h"
@@ -58,4 +58,4 @@ private:
 Heightfield *CreateHeightfieldShape(const Transform *o2w, const Transform *w2o,
         bool reverseOrientation, const ParamSet &params);
 
-#endif // PBRT_SHAPES_HEIGHTFIELD_H
+#endif // PBRT_SHAPES_HEIGHTFIELD2_H
