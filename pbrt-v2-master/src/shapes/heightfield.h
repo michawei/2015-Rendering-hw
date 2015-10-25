@@ -33,8 +33,8 @@
 #pragma once
 #endif
 
-#ifndef PBRT_SHAPES_HEIGHTFIELD2_H
-#define PBRT_SHAPES_HEIGHTFIELD2_H
+#ifndef PBRT_SHAPES_HEIGHTFIELD_H
+#define PBRT_SHAPES_HEIGHTFIELD_H
 
 // shapes/heightfield.h*
 #include "shape.h"

@@ -1,7 +1,7 @@
 Film "image" "string filename" ["hftest.exr"] 
 "integer xresolution" [256] "integer yresolution" [256] 
 
-Sampler "bestcandidate" "integer pixelsamples" [2] 
+Sampler "bestcandidate" "integer pixelsamples" [4] 
 
 LookAt 0 0 0 0 0 1  0 1 0
 Camera "perspective" "float fov" [45]

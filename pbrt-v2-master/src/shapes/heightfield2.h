@@ -33,8 +33,8 @@
 #pragma once
 #endif
 
-#ifndef PBRT_SHAPES_HEIGHTFIELD_H
-#define PBRT_SHAPES_HEIGHTFIELD_H
+#ifndef PBRT_SHAPES_HEIGHTFIELD2_H
+#define PBRT_SHAPES_HEIGHTFIELD2_H
 
 // shapes/heightfield.h*
 #include "shape.h"
@@ -51,14 +51,35 @@ public:
     bool IntersectP(const Ray &ray) const;
     void Refine(vector<Reference<Shape> > &refined) const;
     BBox ObjectBound() const;
+    float RAY_EPSILON;
+    void GetShadingGeometry(const Transform &obj2world,
+                                    const DifferentialGeometry &dg,
+                                    DifferentialGeometry *dgShading) const;
 private:
+    // Hwightfield Private Function
+    void computeNormal();
+    void computeMaxMinZ(const Ray &ray, float rayEpsilon, int traceX, int traceY, float &minZ, float &maxZ) const;
+    bool triangleIntersection(/*Output*/ DifferentialGeometry *dg, float *tHit, /*Input*/const Ray &ray, int *index) const;
+    bool triangleIntersectionP(/*Input*/const Ray &ray, int *index) const;
     // Heightfield Private Data
     float *z;
+    float *quadMaxZ;
+    float *quadMinZ;
+    float *uvs;
+    float widthX;
+    float widthY;
+    float nxMinus1, nyMinus1;
+    int *triangleVertexIndex;
     int nx, ny;
+    int numTriangles;
+    int numVertices;
+    
+    Vector *vertexNormal;
+    Point *P;
 };
 
 
 Heightfield2 *CreateHeightfield2Shape(const Transform *o2w, const Transform *w2o,
         bool reverseOrientation, const ParamSet &params);
 
-#endif // PBRT_SHAPES_HEIGHTFIELD_H
+#endif // PBRT_SHAPES_HEIGHTFIELD2_H
