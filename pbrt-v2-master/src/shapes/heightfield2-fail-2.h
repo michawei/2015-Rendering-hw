@@ -58,17 +58,24 @@ public:
 private:
     // Hwightfield Private Function
     void computeNormal();
+    void computeMaxMinZ(const Ray &ray, float rayEpsilon, int traceX, int traceY, float &minZ, float &maxZ) const;
     bool triangleIntersection(/*Output*/ DifferentialGeometry *dg, float *tHit, float *rayEpsilon, /*Input*/const Ray &ray, Point *index) const;
     bool triangleIntersectionP(/*Input*/const Ray &ray, Point *index) const;
-    
     // Heightfield Private Data
     float *z;
+    float *quadMaxZ;
+    float *quadMinZ;
+    float *uvs;
     float widthX;
     float widthY;
-    int nx, ny;
     int nxMinus1, nyMinus1;
+    int *triangleVertexIndex;
+    int nx, ny;
+    int numTriangles;
+    int numVertices;
     
     Normal *vertexNormal;
+    Point *P;
 };
 
 
