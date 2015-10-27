@@ -58,8 +58,8 @@ public:
 private:
     // Hwightfield Private Function
     void computeNormal();
-    bool triangleIntersection(/*Output*/ DifferentialGeometry *dg, float *tHit, float *rayEpsilon, /*Input*/const Ray &ray, Point *index) const;
-    bool triangleIntersectionP(/*Input*/const Ray &ray, Point *index) const;
+    bool triangleIntersection(/*Output*/ DifferentialGeometry *dg, float *tHit, float *rayEpsilon, /*Input*/const Ray &ray, Point *triangle) const;
+    bool triangleIntersectionP(/*Input*/const Ray &ray, Point *triangle) const;
     
     // Heightfield Private Data
     float *z;

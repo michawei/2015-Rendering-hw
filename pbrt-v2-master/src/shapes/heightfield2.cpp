@@ -35,9 +35,9 @@
 #include "shapes/heightfield2.h"
 #include "shapes/trianglemesh.h"
 #include "paramset.h"
-#include <iostream>
-
 using namespace std;
+
+#define PHONG_INTERPOLATION 1
 
 // Heightfield Method Definitions
 Heightfield2::Heightfield2(const Transform *o2w, const Transform *w2o, bool ro, int x, int y, const float *zs): Shape(o2w, w2o, ro) {
@@ -60,52 +60,54 @@ Heightfield2::~Heightfield2() {
 }
 
 void Heightfield2::computeNormal(){
-    //Normal *surfaceNormal = new Normal [numTriangles];
     
     // Neighbor
     int neighbor1[12] = {-1, 0, -1, 1, 0, 1, 1, 0, 1, -1, 0, -1};
     int neighbor2[12] = {1, 0, 1, -1, 0, -1, -1, 0, -1, 1, 0, 1};
     int *v;
-    for (int j = 0; j < ny; ++j){
-        for (int i = 0; i < nx; ++i){
-            if (((i == nx - 1) && (j > 0 && j <= ny -1)) || (((j == ny - 1) && (i > 0 && i < nx - 1))))
+    int x, y;
+    for (y = 0; y < ny; ++y){
+        for (x = 0; x < nx; ++x){
+            if (((x == nxMinus1) && (y > 0 && y <= nyMinus1)) || (((y == nyMinus1) && (x > 0 && x < nxMinus1))))
                 v = neighbor2;
             else
                 v = neighbor1;
             vector<Point> points;
             Normal result = Normal(0, 0, 0);
-            // The point at which the normal we want to find stays
-            Point p = Point(i * widthX, j * widthY, z[i + nx * j]);
+            // centor normal
+            Point p = Point(x * widthX, y * widthY, z[x + nx * y]);
             
+            int px, py, pz;
             for (int k = 0; k < 12; k += 2){
-                int px = i + v[k];
-                int py = j + v[k+1];
-                int pz = px + nx * py;
-                if ((px >= 0) && (px <= (nx - 1)) && (py >= 0) && (py <= (ny - 1))){
+                px = x + v[k];
+                py = y + v[k+1];
+                pz = px + nx * py;
+                if ((px >= 0) && (px <= (nxMinus1)) && (py >= 0) && (py <= (nyMinus1))){
                     Point point = Point(px * widthX, py * widthY, z[pz]);
                     points.push_back(point);
                 }
             }
             vector<Point>::iterator it;
+            Vector v1, v2;
             for (it = points.begin(); (it+1)!= points.end(); it++){
-                Vector v1 = *it - p;
-                Vector v2 = *(it+1) - p;
+                v1 = *it - p;
+                v2 = *(it+1) - p;
                 result += Normalize(Normal(Cross(v1, v2)));
             }
             if (points.size() == 6) {
-                vector<Point>::iterator it = points.begin();
-                Vector v2 = *it - p;
-                Vector v1 = *(it+5) - p;
+                it = points.begin();
+                v2 = *it - p;
+                v1 = *(it+5) - p;
                 result += Normalize(Normal(Cross(v1, v2)));
-                vertexNormal[i + nx * j] = Normalize(result / 6);
             }
-            else
-                vertexNormal[i + nx * j] = Normalize(result / (points.size() - 1));
+            vertexNormal[x + nx * y] = Normalize(result);
         }
     }
-
-    // Surface normal
+    
+    // Surface normal - 2 triangle normal
     /*
+     
+    //Normal *surfaceNormal = new Normal [numTriangles];
     int *vp = triangleVertexIndex;
     int index[4];
     Vector point[4];
@@ -190,6 +192,7 @@ bool Heightfield2::triangleIntersection(/*Output*/ DifferentialGeometry *dg, flo
     if (t < ray.mint || t > ray.maxt)
         return false;
     
+    
     // Compute triangle partial derivatives
     Vector dpdu, dpdv;
     
@@ -214,11 +217,12 @@ bool Heightfield2::triangleIntersection(/*Output*/ DifferentialGeometry *dg, flo
     float b0 = 1 - b1 - b2;
     float tu = b0*triangle[0].x + b1*triangle[1].x + b2*triangle[2].x;
     float tv = b0*triangle[0].y + b1*triangle[1].y + b2*triangle[2].y;
+    
     // Fill in _DifferentialGeometry_ from triangle hit
     *dg = DifferentialGeometry(ray(t), dpdu, dpdv,
                                Normal(0,0,0), Normal(0,0,0),
                                tu, tv, this);
-    
+
     *tHit = t;
     *rayEpsilon = 1e-3f * *tHit;
     return true;
@@ -265,7 +269,11 @@ BBox Heightfield2::ObjectBound() const {
 
 
 bool Heightfield2::CanIntersect() const {
+#if PHONG_INTERPOLATION
     return true;
+#else
+    return false;
+#endif
 }
 
 int sign(float a){
@@ -274,7 +282,6 @@ int sign(float a){
 
 bool Heightfield2::Intersect(const Ray &ray, float *tHit, float *rayEpsilon, DifferentialGeometry *dg) const {
     
-    //cout << "EPS" << endl;
     //cout << *rayEpsilon << endl;
     // Transform ray to object space
     Ray thisRay;
@@ -298,6 +305,7 @@ bool Heightfield2::Intersect(const Ray &ray, float *tHit, float *rayEpsilon, Dif
     int signX, signY;
     int outX, outY;
     
+    // DDA set
     indexX = Clamp((int)(firstHit.x * nxMinus1), (int)0, (int)(nxMinus1-1));
     signX = sign(thisRay.d.x);
     if ( thisRay.d.x >= 0 ) {
@@ -324,7 +332,7 @@ bool Heightfield2::Intersect(const Ray &ray, float *tHit, float *rayEpsilon, Dif
         outY = -1;
     }
     
-    
+    // run on DDA line
     Point triangle[3];
     while (1){
         
@@ -384,6 +392,7 @@ bool Heightfield2::IntersectP(const Ray &ray) const {
     int signX, signY;
     int outX, outY;
     
+    // DDA set
     indexX = Clamp((int)(firstHit.x * nxMinus1), (int)0, (int)(nxMinus1-1));
     signX = sign(thisRay.d.x);
     if ( thisRay.d.x >= 0 ) {
@@ -410,7 +419,7 @@ bool Heightfield2::IntersectP(const Ray &ray) const {
         outY = -1;
     }
     
-    
+    // run on DDA line
     Point triangle[3];
     while (1){
         
@@ -450,55 +459,58 @@ bool Heightfield2::IntersectP(const Ray &ray) const {
 void Heightfield2::GetShadingGeometry(const Transform &obj2world, const DifferentialGeometry &dg, DifferentialGeometry *dgShading) const{
     
     //*dgShading = dg;
+    
     // Phong shading
+    // find hit triangle
+    // Hit point index
     int x = Clamp((int)(dg.u * nxMinus1), (int)0, (int)nxMinus1);
     int y = Clamp((int)(dg.v * nyMinus1), (int)0, (int)nyMinus1);
     
-    Point point1 = Point((x + 1) * widthX, y * widthY, z[y * nx + x + 1]);
-    Point point2 = Point(x * widthX, (y + 1) * widthY, z[(y + 1) * nx + x]);
-    Point point3 = Point(dg.u, point2.y - ( dg.u - point2.x ), 0);
-    Point point0;
-    int q;
+    Point pointXAdd1 = Point((x + 1) * widthX, y * widthY, z[y * nx + x + 1]);
+    Point pointYAdd1 = Point(x * widthX, (y + 1) * widthY, z[(y + 1) * nx + x]);
+    Point pointDiagonal = Point(dg.u, pointYAdd1.y - ( dg.u - pointYAdd1.x ), 0);
+    Point pointOriginal;
+    Normal n[3];
     
-    if ( dg.v <= point3.y ) {
-        point0 = Point(x * widthX, y * widthY, z[y * nx + x]);
-        q = y * nx + x;
+    // triangle[0] is (x, y) or (x+1, y+1), pick point0 and their normal
+    if ( dg.v <= pointDiagonal.y ) {
+        pointOriginal = Point(x * widthX, y * widthY, z[y * nx + x]);
+        n[0] = Normal(vertexNormal[y * nx + x]);
+        n[1] = Normal(vertexNormal[y * nx + (x + 1)]);
+        n[2] = Normal(vertexNormal[(y + 1) * nx + x]);
     }
     else {
-        point0 = Point((x + 1) * widthX, (y + 1) * widthY, z[(y + 1) * nx + x + 1]);
-        q = (y + 1) * nx + (x + 1);
+        pointOriginal = Point((x + 1) * widthX, (y + 1) * widthY, z[(y + 1) * nx + x + 1]);
+        n[0] = Normal(vertexNormal[(y + 1) * nx + (x + 1)]);
+        n[1] = Normal(vertexNormal[y * nx + (x + 1)]);
+        n[2] = Normal(vertexNormal[(y + 1) * nx + x]);
     }
-    
-    Normal n[3] = { Normal(vertexNormal[q]), Normal(vertexNormal[y * nx + (x + 1)]), Normal(vertexNormal[(y + 1) * nx + x])};
-    
-    // Compute normal with Pong interpolation
-    Point a = Point(point1.x, point1.y, 0);
-    Point b = Point(point2.x, point2.y, 0);
-    Point c = Point(point3.x, point3.y, 0);
 
-    Normal n1 = Normalize((c - a).Length() * n[2] + (c - b).Length() * n[1]);
+    // Phong Interpolation begin
+    // set z = 0 for use "Length()" function
+    pointXAdd1.z = 0;
+    pointYAdd1.z = 0;
+    
+    Normal n1 = Normalize((pointDiagonal - pointXAdd1).Length() * n[2] + (pointDiagonal - pointYAdd1).Length() * n[1]);
     Normal n2;
 
-    if ( dg.v < point3.y )
-        n2 = Normalize(fabs(dg.u - point0.x) * n[1] + fabs(point1.x - dg.u) * n[0]);
+    if ( dg.v < pointDiagonal.y )
+        n2 = Normalize(fabs(dg.u - pointOriginal.x) * n[1] + fabs(pointXAdd1.x - dg.u) * n[0]);
     else
-        n2 = Normalize(fabs(dg.u - point2.x) * n[0] + fabs(point0.x - dg.u) * n[2]);
+        n2 = Normalize(fabs(dg.u - pointYAdd1.x) * n[0] + fabs(pointOriginal.x - dg.u) * n[2]);
     
-    float d1 = fabs(point3.y - dg.v);
-    float d2 = fabs(dg.v - point0.y);
-    Normal hitNormal = (*ObjectToWorld)(Normalize(d2 * n1 + d1 * n2));
+    Normal hitNormal = (*ObjectToWorld)(Normalize(fabs(dg.v - pointOriginal.y) * n1 + fabs(pointDiagonal.y - dg.v) * n2));
 				
-    // Compute the differential normal at hit point
+    // triangle mesh dndu, dndv
     Normal dndu, dndv;
-    float du1 = point0.x - point2.x;
-    float du2 = point1.x - point2.x;
-    float dv1 = point0.y - point2.y;
-    float dv2 = point1.y - point2.y;
+    float du1 = pointOriginal.x - pointYAdd1.x;
+    float du2 = pointXAdd1.x    - pointYAdd1.x;
+    float dv1 = pointOriginal.y - pointYAdd1.y;
+    float dv2 = pointXAdd1.y    - pointYAdd1.y;
     Normal dn1 = n[0] - n[2];
     Normal dn2 = n[1] - n[2];
     float determinant = du1 * dv2 - dv1 * du2;
     if (determinant == 0.f) {
-        // Handle zero determinant for triangle partial derivative matrix
         dndu = dndv = Normal(0, 0, 0);
     }
     else {
@@ -521,13 +533,13 @@ void Heightfield2::GetShadingGeometry(const Transform &obj2world, const Differen
     dgShading->dudy = dg.dudy;  dgShading->dvdy = dg.dvdy;
     dgShading->dpdx = dg.dpdx;  dgShading->dpdy = dg.dpdy;
     
-    return ;
+    return;
 }
 
 
 void Heightfield2::Refine(vector<Reference<Shape> > &refined) const {
     /* Default Not Use */
-    /*int ntris = 2*(nx-1)*(ny-1);
+    int ntris = 2*(nx-1)*(ny-1);
     refined.reserve(ntris);
     int *verts = new int[3*ntris];
     Point *P = new Point[nx*ny];
@@ -567,7 +579,7 @@ void Heightfield2::Refine(vector<Reference<Shape> > &refined) const {
     refined.push_back(CreateTriangleMeshShape(ObjectToWorld, WorldToObject, ReverseOrientation, paramSet));
     delete[] P;
     delete[] uvs;
-    delete[] verts;*/
+    delete[] verts;
 }
 
 
