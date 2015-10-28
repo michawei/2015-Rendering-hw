@@ -37,7 +37,8 @@
 #include "paramset.h"
 using namespace std;
 
-#define PHONG_INTERPOLATION 1
+#define DEFAULT 1
+#define PHONG_INTERPOLATION 0
 
 // Heightfield Method Definitions
 Heightfield2::Heightfield2(const Transform *o2w, const Transform *w2o, bool ro, int x, int y, const float *zs): Shape(o2w, w2o, ro) {
@@ -269,10 +270,10 @@ BBox Heightfield2::ObjectBound() const {
 
 
 bool Heightfield2::CanIntersect() const {
-#if PHONG_INTERPOLATION
-    return true;
-#else
+#if DEFAULT
     return false;
+#else
+    return true;
 #endif
 }
 
@@ -458,8 +459,7 @@ bool Heightfield2::IntersectP(const Ray &ray) const {
 
 void Heightfield2::GetShadingGeometry(const Transform &obj2world, const DifferentialGeometry &dg, DifferentialGeometry *dgShading) const{
     
-    //*dgShading = dg;
-    
+#if PHONG_INTERPOLATION
     // Phong shading
     // find hit triangle
     // Hit point index
@@ -532,7 +532,9 @@ void Heightfield2::GetShadingGeometry(const Transform &obj2world, const Differen
     dgShading->dudx = dg.dudx;  dgShading->dvdx = dg.dvdx;
     dgShading->dudy = dg.dudy;  dgShading->dvdy = dg.dvdy;
     dgShading->dpdx = dg.dpdx;  dgShading->dpdy = dg.dpdy;
-    
+#else
+    *dgShading = dg;
+#endif
     return;
 }
 
