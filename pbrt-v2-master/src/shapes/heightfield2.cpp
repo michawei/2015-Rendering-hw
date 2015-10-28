@@ -37,8 +37,8 @@
 #include "paramset.h"
 using namespace std;
 
-#define DEFAULT 1
-#define PHONG_INTERPOLATION 0
+#define DEFAULT 0
+#define PHONG_INTERPOLATION 1
 
 // Heightfield Method Definitions
 Heightfield2::Heightfield2(const Transform *o2w, const Transform *w2o, bool ro, int x, int y, const float *zs): Shape(o2w, w2o, ro) {
