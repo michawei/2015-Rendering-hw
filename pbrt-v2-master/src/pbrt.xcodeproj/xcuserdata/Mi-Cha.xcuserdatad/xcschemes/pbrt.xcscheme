@@ -61,19 +61,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "scenes/project1-heightfields/hftest.pbrt"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "scenes/project1-heightfields/landsea-big.pbrt"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "scenes/project1-heightfields/land.pbrt"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "scenes/project1-heightfields/landsea-0.pbrt"
+            argument = "scenes/project2-template/dof-dragons.dgauss.pbrt"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
