@@ -1,8 +1,8 @@
-Film "image"  "integer xresolution" [300] "integer yresolution" [300] "string filename" ["dof-dragons.wide.exr" ] 
+Film "image"  "integer xresolution" [300] "integer yresolution" [300] "string filename" ["dof-dragons.wide512.exr" ] 
 
 
 # For high quality images, use 128 or 512 samples
-Sampler "lowdiscrepancy" "integer pixelsamples" [32] # for final: [512] 
+Sampler "lowdiscrepancy" "integer pixelsamples" [4] # for final: [512] 
 
 #LookAt 2.3 .1 -.7    .4 0 -.9  0 1 0
 Scale 5000 5000 5000

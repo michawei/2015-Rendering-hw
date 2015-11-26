@@ -10,6 +10,14 @@
 #include "paramset.h"
 #include "film.h"
 
+struct Len {
+    bool zero;
+    float radius;
+    float z;
+    float n_ratio;
+    float aperture;
+};
+
 // RealisticCamera Declarations
 class RealisticCamera : public Camera {
 public:
@@ -21,8 +29,14 @@ public:
 	float GenerateRay(const CameraSample &sample, Ray *) const;
   
 private:
-	// RealisticCamera Public Methods
-
+	// RealisticCamera Private Methods
+    bool ParsingDat(const string datFile);
+    bool RaySphereIntersection(Point& O, Vector& D, Len len) const;
+    Transform placeFilm;
+    vector<Len> lens;
+    float distance;
+    float Hither;
+    float Yon;
 };
 
 
