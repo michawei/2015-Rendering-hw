@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		003B07731BD23713007DA32E /* heightfield2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 003B07711BD23713007DA32E /* heightfield2.cpp */; };
 		008871EC1BFCC562000ED961 /* realistic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 008871EA1BFCC562000ED961 /* realistic.cpp */; };
+		00F2F9C71C269BA2008C1647 /* medianCutEnvironmentLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00F2F9C51C269BA2008C1647 /* medianCutEnvironmentLight.cpp */; };
 		B130248E1236EE5100206AC7 /* fileutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B130248C1236EE5100206AC7 /* fileutil.cpp */; };
 		B13B5765161245F5008FFA44 /* targa.c in Sources */ = {isa = PBXBuildFile; fileRef = B13B5763161245F5008FFA44 /* targa.c */; };
 		B19397BB12083210008317C5 /* shinymetal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B19397B912083210008317C5 /* shinymetal.cpp */; };
@@ -174,6 +175,8 @@
 		003B07721BD23713007DA32E /* heightfield2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = heightfield2.h; path = shapes/heightfield2.h; sourceTree = SOURCE_ROOT; };
 		008871EA1BFCC562000ED961 /* realistic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = realistic.cpp; sourceTree = "<group>"; };
 		008871EB1BFCC562000ED961 /* realistic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = realistic.h; sourceTree = "<group>"; };
+		00F2F9C51C269BA2008C1647 /* medianCutEnvironmentLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = medianCutEnvironmentLight.cpp; sourceTree = "<group>"; };
+		00F2F9C61C269BA2008C1647 /* medianCutEnvironmentLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = medianCutEnvironmentLight.h; sourceTree = "<group>"; };
 		B130248C1236EE5100206AC7 /* fileutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fileutil.cpp; sourceTree = "<group>"; };
 		B130248D1236EE5100206AC7 /* fileutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileutil.h; sourceTree = "<group>"; };
 		B13B5763161245F5008FFA44 /* targa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = targa.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -657,6 +660,8 @@
 				B1D8EC091170310E00A8A49E /* goniometric.cpp */,
 				B1D8EC0A1170310E00A8A49E /* goniometric.h */,
 				B1D8EC0B1170310E00A8A49E /* infinite.cpp */,
+				00F2F9C51C269BA2008C1647 /* medianCutEnvironmentLight.cpp */,
+				00F2F9C61C269BA2008C1647 /* medianCutEnvironmentLight.h */,
 				B1D8EC0C1170310E00A8A49E /* infinite.h */,
 				B1D8EC0D1170310E00A8A49E /* point.cpp */,
 				B1D8EC0E1170310E00A8A49E /* point.h */,
@@ -987,6 +992,7 @@
 				B1D8ECBB1170310E00A8A49E /* checkerboard.cpp in Sources */,
 				B1D8ECBC1170310E00A8A49E /* constant.cpp in Sources */,
 				B1D8ECBD1170310E00A8A49E /* dots.cpp in Sources */,
+				00F2F9C71C269BA2008C1647 /* medianCutEnvironmentLight.cpp in Sources */,
 				B1D8ECBE1170310E00A8A49E /* fbm.cpp in Sources */,
 				B1D8ECBF1170310E00A8A49E /* imagemap.cpp in Sources */,
 				B1D8ECC01170310E00A8A49E /* marble.cpp in Sources */,
